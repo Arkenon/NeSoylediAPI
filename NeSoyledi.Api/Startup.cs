@@ -32,6 +32,8 @@ namespace NeSoyledi.Api
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IDiscourseRepository, DiscourseRepository>();
             services.AddScoped<IDiscourseService, DiscourseManager>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IProfileService, ProfileManager>();
             services.AddDbContext<NeSoylediDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(options =>
             {

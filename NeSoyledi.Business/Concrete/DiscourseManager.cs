@@ -28,15 +28,33 @@ namespace NeSoyledi.Business.Concrete
             return _discourseRepository.GetAllPaged(page, pageSize);
         }
 
+        public IQueryable<Discourse> GetDiscoursesForHome()
+        {
+            return _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).OrderBy(r => Guid.NewGuid()).Take(12);
+        }
+
+        public IQueryable<Discourse> GetDiscoursesByProfileId(int profileId, string order)
+        {
+            if (order == "asc")
+            {
+                return _discourseRepository.Where(x => x.ProfileId == profileId).OrderBy(r => r.DiscourseDate).Take(10);
+            }
+            else
+            {
+                return _discourseRepository.Where(x => x.ProfileId == profileId).OrderByDescending(r => r.DiscourseDate).Take(10);
+            }
+
+        }
+
         public IQueryable<Discourse> GetAllWithLazyPaged(int page, int pageSize)
         {
             var indexToGet = (page - 1) * pageSize;
             return _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).Skip(indexToGet).Take(pageSize);
         }
 
-        public Task<Discourse> GetById(int id)
+        public async Task<Discourse> GetById(int id)
         {
-            return _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category)
+            return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category)
                         .FirstOrDefaultAsync(e => e.Id == id); ;
         }
         public async Task Create(Discourse entity)

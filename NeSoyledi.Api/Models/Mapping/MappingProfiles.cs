@@ -24,6 +24,8 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<DiscourseWithCategoryDTO, Discourse>();
             CreateMap<Discourse, DiscourseDTO>();
             CreateMap<Discourse, DiscourseWithCategoryDTO>();
+            CreateMap<Discourse, DiscourseWithProfileDTO>();
+            CreateMap<DiscourseWithProfileDTO, Discourse>();
 
             //Profile
             CreateMap<ProfileForDiscourseDTO, Profiles>();

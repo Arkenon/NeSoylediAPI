@@ -43,9 +43,9 @@ namespace NeSoyledi.Business.Concrete
                         .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task<Category> GetById(int id)
+        public async Task<Category> GetById(int id)
         {
-            return _categoryRepository.GetById(id);
+            return await _categoryRepository.GetById(id);
         }
         public async Task Create(Category entity)
         {
