@@ -8,7 +8,6 @@ namespace NeSoyledi.Data.Concrete
         public CategoryRepository(NeSoylediDbContext dbContext)
            : base(dbContext)
         {
-
         }
     }
 }

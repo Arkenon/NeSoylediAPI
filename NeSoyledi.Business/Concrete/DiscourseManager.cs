@@ -2,9 +2,11 @@
 using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
+using NeSoyledi.Data.Helpers;
 using NeSoyledi.Entities;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NeSoyledi.Business.Concrete
@@ -18,44 +20,31 @@ namespace NeSoyledi.Business.Concrete
             _context = context;
             _discourseRepository = discourseRepository;
         }
-        public IQueryable<Discourse> GetAll()
+        public PagedList<Discourse> GetAll(int pageNumber, int pageSize)
         {
-            return _discourseRepository.GetAll();
+            return PagedList<Discourse>.ToPagedList(_discourseRepository.GetAll(pageNumber, pageSize)
+                .Include(x => x.Profile).Include(x => x.Category), pageNumber, pageSize);
         }
-
-        public IQueryable<Discourse> GetAllPaged(int page, int pageSize)
+        public IQueryable<Discourse> GetDiscoursesForHome(int pageNumber, int pageSize)
         {
-            return _discourseRepository.GetAllPaged(page, pageSize);
+            return _discourseRepository.GetAll(pageNumber, pageSize).Include(x => x.Profile).Include(x => x.Category).OrderBy(r => Guid.NewGuid()).Take(pageSize);
         }
-
-        public IQueryable<Discourse> GetDiscoursesForHome()
-        {
-            return _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).OrderBy(r => Guid.NewGuid()).Take(12);
-        }
-
-        public IQueryable<Discourse> GetDiscoursesByProfileId(int profileId, string order)
+        public PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
         {
             if (order == "asc")
             {
-                return _discourseRepository.Where(x => x.ProfileId == profileId).OrderBy(r => r.DiscourseDate).Take(10);
+                return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.ProfileId == profileId)
+                    .OrderBy(r => r.DiscourseDate), pageNumber, pageSize);
             }
             else
             {
-                return _discourseRepository.Where(x => x.ProfileId == profileId).OrderByDescending(r => r.DiscourseDate).Take(10);
+                return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.ProfileId == profileId)
+                   .OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
             }
-
         }
-
-        public IQueryable<Discourse> GetAllWithLazyPaged(int page, int pageSize)
-        {
-            var indexToGet = (page - 1) * pageSize;
-            return _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).Skip(indexToGet).Take(pageSize);
-        }
-
         public async Task<Discourse> GetById(int id)
         {
-            return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category)
-                        .FirstOrDefaultAsync(e => e.Id == id); ;
+            return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).FirstOrDefaultAsync(e => e.Id == id);
         }
         public async Task Create(Discourse entity)
         {
@@ -68,6 +57,10 @@ namespace NeSoyledi.Business.Concrete
         public async Task Delete(int id)
         {
             await _discourseRepository.Delete(id);
+        }
+        public IQueryable<Discourse> Where(Expression<Func<Discourse, bool>> where)
+        {
+            return _discourseRepository.Where(where);
         }
     }
 }

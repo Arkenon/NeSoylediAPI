@@ -7,7 +7,6 @@ namespace NeSoyledi.Data.Concrete
     {
         public ProfileRepository(NeSoylediDbContext dbContext) : base(dbContext)
         {
-
         }
     }
 }

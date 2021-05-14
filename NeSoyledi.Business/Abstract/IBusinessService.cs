@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NeSoyledi.Data.Helpers;
+using System;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace NeSoyledi.Business.Abstract
 {
     public interface IBusinessService<TEntity> where TEntity : class
     {
-        IQueryable<TEntity> GetAll();
-
-        IQueryable<TEntity> GetAllPaged(int page, int pageSize);
-
+        PagedList<TEntity> GetAll(int pageNumber, int pageSize);
         Task<TEntity> GetById(int id);
-
+        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> where);
         Task Create(TEntity entity);
-
         Task Update(int id, TEntity entity);
-
         Task Delete(int id);
     }
 }

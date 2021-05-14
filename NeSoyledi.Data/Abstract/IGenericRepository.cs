@@ -10,8 +10,7 @@ namespace NeSoyledi.Data.Abstract
 {
     public interface IGenericRepository<TEntity> where TEntity : class, IEntity
     {
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> GetAllPaged(int page, int pageSize);
+        IQueryable<TEntity> GetAll(int pageNumber, int pageSize);
         IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> where);
         Task<TEntity> GetById(int id);
         Task Create(TEntity entity);

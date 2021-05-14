@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NeSoyledi.Api.Controllers
@@ -31,24 +29,44 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<DiscourseDTO> GetAllPaged(int page = 1, int pageSize = 10)
+        public IEnumerable<DiscourseDTO> Get(int pageNumber, int pageSize)
         {
-            var discourse = _discourseService.GetAllWithLazyPaged(page, pageSize);
+            var discourse = _discourseService.GetAll(pageNumber, pageSize);
             var discourseList = _mapper.Map<IEnumerable<DiscourseDTO>>(discourse);
+            var metadata = new
+            {
+                discourse.TotalCount,
+                discourse.PageSize,
+                discourse.CurrentPage,
+                discourse.TotalPages,
+                discourse.HasNext,
+                discourse.HasPrevious
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
             return discourseList;
         }
         [HttpGet("{profileId}")]
-        public IEnumerable<DiscourseWithProfileDTO> GetDiscoursesByProfileId(int profileId,string order)
+        public IEnumerable<DiscourseWithProfileDTO> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
         {
-            var discourse = _discourseService.GetDiscoursesByProfileId(profileId, order);
+            var discourse = _discourseService.GetDiscoursesByProfileId(pageNumber, pageSize, profileId, order);
             var discourseList = _mapper.Map<IEnumerable<DiscourseWithProfileDTO>>(discourse);
+            var metadata = new
+            {
+                discourse.TotalCount,
+                discourse.PageSize,
+                discourse.CurrentPage,
+                discourse.TotalPages,
+                discourse.HasNext,
+                discourse.HasPrevious
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
             return discourseList;
         }
 
         [HttpGet("")]
-        public IEnumerable<DiscourseDTO> GetDiscoursesForHome()
+        public IEnumerable<DiscourseDTO> GetDiscoursesForHome(int pageNumber = 1, int pageSize = 10)
         {
-            var discourse = _discourseService.GetDiscoursesForHome();
+            var discourse = _discourseService.GetDiscoursesForHome(pageNumber, pageSize);
             var discourseList = _mapper.Map<IEnumerable<DiscourseDTO>>(discourse);
             return discourseList;
         }

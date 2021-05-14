@@ -14,10 +14,6 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<Category, CategoryDTO>();
             CreateMap<SaveCategoryDTO, Category>();
             CreateMap<Category, SaveCategoryDTO>();
-            CreateMap<CategoryWithDiscourseDTO, Category>();
-            CreateMap<Category, CategoryWithDiscourseDTO>();
-            CreateMap<CategoryWithVersusDTO, Category>();
-            CreateMap<Category, CategoryWithVersusDTO>();
 
             //Discourse
             CreateMap<DiscourseDTO, Discourse>();

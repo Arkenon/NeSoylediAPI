@@ -1,14 +1,10 @@
-﻿using NeSoyledi.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using NeSoyledi.Data.Helpers;
+using NeSoyledi.Entities;
 
 namespace NeSoyledi.Business.Abstract
 {
     public interface IProfileService : IBusinessService<Profiles>
     {
-        IQueryable<Profiles> GetAllWithLazyPaged(int page, int pageSize);
-        IQueryable<Profiles> GetProfilesForHome();
+        PagedList<Profiles> GetProfilesForHome(int pageNumber, int pageSize);
     }
 }

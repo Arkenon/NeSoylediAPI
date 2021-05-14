@@ -7,7 +7,6 @@ namespace NeSoyledi.Data.Concrete
     {
         public DiscourseRepository(NeSoylediDbContext dbContext) : base(dbContext)
         {
-
         }
     }
 }

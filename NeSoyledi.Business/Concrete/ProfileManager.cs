@@ -8,40 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using NeSoyledi.Data.Helpers;
 
 namespace NeSoyledi.Business.Concrete
 {
     public class ProfileManager : IProfileService
     {
         private IProfileRepository _profileRepository;
-        private readonly NeSoylediDbContext _context;
-
-        public ProfileManager(IProfileRepository profileRepository, NeSoylediDbContext neSoylediDbContext)
+        public ProfileManager(IProfileRepository profileRepository)
         {
             _profileRepository = profileRepository;
-            _context = neSoylediDbContext;
         }
-        public IQueryable<Profiles> GetAll()
+        public PagedList<Profiles> GetAll(int pageNumber, int pageSize)
         {
-            return _profileRepository.GetAll();
+            return PagedList<Profiles>.ToPagedList(_profileRepository.GetAll(pageNumber,pageSize),pageNumber,pageSize);
         }
-
-        public IQueryable<Profiles> GetAllPaged(int page, int pageSize)
+        public PagedList<Profiles> GetProfilesForHome(int pageNumber, int pageSize)
         {
-            return _profileRepository.GetAllPaged(page, pageSize);
+            return PagedList<Profiles>.ToPagedList(_profileRepository.GetAll(pageNumber, pageSize).OrderBy(r => Guid.NewGuid()), pageNumber, pageSize);
         }
-
-        public IQueryable<Profiles> GetAllWithLazyPaged(int page, int pageSize)
-        {
-            var indexToGet = (page - 1) * pageSize;
-            return _context.Set<Profiles>().AsNoTracking().Skip(indexToGet).Take(pageSize);
-        }
-
-        public IQueryable<Profiles> GetProfilesForHome()
-        {
-            return _context.Set<Profiles>().AsNoTracking().OrderBy(r => Guid.NewGuid()).Take(12);
-        }
-
         public async Task<Profiles> GetById(int id)
         {
             return await _profileRepository.GetById(id);
@@ -50,15 +36,17 @@ namespace NeSoyledi.Business.Concrete
         {
             await _profileRepository.Create(entity);
         }
-
         public async Task Delete(int id)
         {
             await _profileRepository.Delete(id);
         }
-
         public async Task Update(int id, Profiles entity)
         {
             await _profileRepository.Update(id, entity);
+        }
+        public IQueryable<Profiles> Where(Expression<Func<Profiles, bool>> where)
+        {
+            return _profileRepository.Where(where);
         }
     }
 }

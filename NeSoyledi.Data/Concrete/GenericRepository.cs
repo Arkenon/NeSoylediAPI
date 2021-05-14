@@ -12,20 +12,13 @@ namespace NeSoyledi.Data.Concrete
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly NeSoylediDbContext _dbContext;
-
         public GenericRepository(NeSoylediDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(int pageNumber, int pageSize)
         {
             return _dbContext.Set<TEntity>().AsNoTracking();
-        }
-        public IQueryable<TEntity> GetAllPaged(int page, int pageSize)
-        {
-            var indexToGet = (page - 1) * pageSize;
-            return _dbContext.Set<TEntity>().AsNoTracking().Skip(indexToGet).Take(pageSize);
         }
         public async Task<TEntity> GetById(int id)
         {
@@ -33,7 +26,6 @@ namespace NeSoyledi.Data.Concrete
                         .AsNoTracking()
                         .FirstOrDefaultAsync(e => e.Id == id);
         }
-
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> where)
         {
             return _dbContext.Set<TEntity>().AsNoTracking().Where(where);

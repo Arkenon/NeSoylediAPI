@@ -1,10 +1,11 @@
 ﻿using NeSoyledi.Business.Abstract;
-using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
+using NeSoyledi.Data.Helpers;
 using NeSoyledi.Entities;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace NeSoyledi.Business.Concrete
@@ -12,40 +13,21 @@ namespace NeSoyledi.Business.Concrete
     public class CategoryManager : ICategoryService
     {
         private ICategoryRepository _categoryRepository;
-        private readonly NeSoylediDbContext _context;
-
-        public CategoryManager(ICategoryRepository categoryRepository, NeSoylediDbContext context)
+        public CategoryManager(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
-            _context = context;
         }
-        public IQueryable<Category> GetAll()
+        public PagedList<Category> GetAll(int pageNumber, int pageSize)
         {
-            return _categoryRepository.GetAll();
+            return PagedList<Category>.ToPagedList(_categoryRepository.GetAll(pageNumber, pageSize), pageNumber, pageSize);
         }
-
-        public IQueryable<Category> GetAllPaged(int page, int pageSize)
-        {
-            return _categoryRepository.GetAllPaged(page, pageSize);
-        }
-
-        public Task<Category> GetWithDiscourses(int id)
-        {
-            return _context.Set<Category>()
-                        .AsNoTracking().Include(x => x.Discourses)
-                        .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
-        public Task<Category> GetWithVersus(int id)
-        {
-            return _context.Set<Category>()
-                        .AsNoTracking().Include(x => x.Versus)
-                        .FirstOrDefaultAsync(e => e.Id == id);
-        }
-
         public async Task<Category> GetById(int id)
         {
             return await _categoryRepository.GetById(id);
+        }
+        public IQueryable<Category> Where(Expression<Func<Category, bool>> where)
+        {
+            return _categoryRepository.Where(where);
         }
         public async Task Create(Category entity)
         {

@@ -1,12 +1,12 @@
-﻿using NeSoyledi.Entities;
+﻿using NeSoyledi.Data.Helpers;
+using NeSoyledi.Entities;
 using System.Linq;
 
 namespace NeSoyledi.Business.Abstract
 {
     public interface IDiscourseService: IBusinessService<Discourse>
     {
-        IQueryable<Discourse> GetAllWithLazyPaged(int page, int pageSize);
-        IQueryable<Discourse> GetDiscoursesForHome();
-        IQueryable<Discourse> GetDiscoursesByProfileId(int profileId, string order);
+        IQueryable<Discourse> GetDiscoursesForHome(int pageNumber, int pageSize);
+        PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order);
     }
 }

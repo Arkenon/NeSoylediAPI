@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
 using NeSoyledi.Entities;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,27 +22,22 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<CategoryDTO> GetAll()
+        public IEnumerable<CategoryDTO> Get(int pageNumber = 1, int pageSize = 50)
         {
-            var category = _categoryService.GetAll();
+            var category = _categoryService.GetAll(pageNumber,pageSize);
             var categoryList = _mapper.Map<IEnumerable<CategoryDTO>>(category);
+            var metadata = new
+            {
+                category.TotalCount,
+                category.PageSize,
+                category.CurrentPage,
+                category.TotalPages,
+                category.HasNext,
+                category.HasPrevious
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
             return categoryList;
-        }
-
-        [HttpGet("{id}/discourses", Name = "GetWithDiscourses")]
-        public async Task<CategoryWithDiscourseDTO> GetWithDiscourses(int id)
-        {
-            var category = await _categoryService.GetWithDiscourses(id);
-            var response = _mapper.Map<CategoryWithDiscourseDTO>(category);
-            return response;
-        }
-
-        [HttpGet("{id}/versus", Name = "GetWithVersus")]
-        public async Task<CategoryWithVersusDTO> GetWithVersus(int id)
-        {
-            var category = await _categoryService.GetWithVersus(id);
-            var response = _mapper.Map<CategoryWithVersusDTO>(category);
-            return response;
         }
 
         [HttpGet("{id}")]
