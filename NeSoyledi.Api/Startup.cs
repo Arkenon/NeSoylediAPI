@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using NeSoyledi.Api.MiddleWares;
 using NeSoyledi.Business.Abstract;
 using NeSoyledi.Business.Concrete;
 using NeSoyledi.Data;
@@ -15,6 +16,7 @@ namespace NeSoyledi.Api
 {
     public class Startup
     {
+       
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -60,10 +62,13 @@ namespace NeSoyledi.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseMiddleware<SwaggerInterceptor>();
+           
             app.UseSwagger(); app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ne Söyledi? V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json?key=9a92661b70c983be53143d7600bc2284", "Ne Söyledi? V1");
             });
         }
     }
