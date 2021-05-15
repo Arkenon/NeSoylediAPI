@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
@@ -46,22 +47,6 @@ namespace NeSoyledi.Api.Controllers
             var _category = await _categoryService.GetById(id);
             var category = _mapper.Map<CategoryDTO>(_category);   
             return category;
-        }
-
-        [HttpPost("")]
-        public async Task<CategoryDTO> Create(SaveCategoryDTO entity)
-        {
-            var category = _mapper.Map<Category>(entity);
-            await _categoryService.Create(category);
-            return await GetById(category.Id);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<CategoryDTO> Update(int id, SaveCategoryDTO entity)
-        {
-            var category = _mapper.Map<Category>(entity);
-            await _categoryService.Update(id, category);
-            return await GetById(category.Id);
         }
     }
 }

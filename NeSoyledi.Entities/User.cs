@@ -43,7 +43,8 @@ namespace NeSoyledi.Entities
         [MaxLength(255)]
         public string UserActivationKey { get; set; }
         public bool UserStatus { get; set; }
-
+        public string RefreshToken { get; set; }
+        public DateTime? RefreshTokenEndDate { get; set; }
         public ICollection<Discourse> Discourses { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }

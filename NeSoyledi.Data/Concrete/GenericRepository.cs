@@ -39,6 +39,7 @@ namespace NeSoyledi.Data.Concrete
         {
             entity.Id = id;
             _dbContext.Set<TEntity>().Update(entity);
+
             await _dbContext.SaveChangesAsync();
         }
         public async Task Delete(int id)

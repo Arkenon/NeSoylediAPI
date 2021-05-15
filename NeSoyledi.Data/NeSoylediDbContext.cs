@@ -18,6 +18,7 @@ namespace NeSoyledi.Data
         public DbSet<Profiles> Profiles { get; set; }
         public DbSet<Versus> Versus { get; set; }
         public DbSet<Organization> Organizations { get; set; }
+        public object Specifications { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

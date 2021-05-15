@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NeSoyledi.Api.MiddleWares;
 using NeSoyledi.Business.Abstract;
@@ -11,12 +13,14 @@ using NeSoyledi.Business.Concrete;
 using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
 using NeSoyledi.Data.Concrete;
+using System;
+using System.Text;
 
 namespace NeSoyledi.Api
 {
     public class Startup
     {
-       
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,12 +34,28 @@ namespace NeSoyledi.Api
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddAutoMapper(typeof(Startup));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Token:Issuer"],
+                    ValidAudience = Configuration["Token:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecurityKey"])),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IDiscourseRepository, DiscourseRepository>();
             services.AddScoped<IDiscourseService, DiscourseManager>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IProfileService, ProfileManager>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserManager>();
             services.AddDbContext<NeSoylediDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(options =>
             {
@@ -53,8 +73,10 @@ namespace NeSoyledi.Api
             app.UseCors(
                 options => options.WithOrigins("http://localhost:3000").AllowAnyMethod()
                 );
-          
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -64,7 +86,7 @@ namespace NeSoyledi.Api
             });
 
             app.UseMiddleware<SwaggerInterceptor>();
-           
+
             app.UseSwagger(); app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";

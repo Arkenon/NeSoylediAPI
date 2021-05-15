@@ -27,6 +27,13 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<ProfileForDiscourseDTO, Profiles>();
             CreateMap<Profiles, ProfileForDiscourseDTO>();
 
+            //User
+            CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>();
+            CreateMap<UserLoginDTO, User>();
+            CreateMap<User, UserLoginDTO>();
+            CreateMap<UserTokenUpdateDTO, User>();
+            CreateMap<User, UserTokenUpdateDTO>();
         }
     }
 }

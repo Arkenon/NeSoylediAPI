@@ -21,4 +21,5 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
         public string CategorySlug { get; set; }
         public bool IsActive { get; set; }
     }
+
 }
