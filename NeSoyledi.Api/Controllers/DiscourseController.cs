@@ -64,7 +64,7 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<DiscourseDTO> GetDiscoursesForHome(int pageNumber = 1, int pageSize = 10)
+        public IEnumerable<DiscourseDTO> GetDiscoursesForHome(int pageNumber = 1, int pageSize = 12)
         {
             var discourse = _discourseService.GetDiscoursesForHome(pageNumber, pageSize);
             var discourseList = _mapper.Map<IEnumerable<DiscourseDTO>>(discourse);

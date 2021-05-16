@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using NeSoyledi.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -16,7 +17,7 @@ namespace NeSoyledi.Data.Helpers
             Configuration = configuration;
         }
         //Token üretecek metot.
-        public Token CreateAccessToken()
+        public Token CreateAccessToken(User user)
         {
             Token tokenInstance = new Token();
 
@@ -27,12 +28,17 @@ namespace NeSoyledi.Data.Helpers
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             //Oluşturulacak token ayarlarını veriyoruz.
-            tokenInstance.Expiration = DateTime.Now.AddMinutes(5);
+            tokenInstance.Expiration = DateTime.Now.AddDays(365);
+
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: Configuration["Token:Issuer"],
                 audience: Configuration["Token:Audience"],
-                expires: tokenInstance.Expiration,//Token süresini 5 dk olarak belirliyorum
-                notBefore: DateTime.Now,//Token üretildikten ne kadar süre sonra devreye girsin ayarlıyouz.
+                claims: new Claim[]
+                {
+                    new Claim(ClaimTypes.Email, user.UserEmail)
+                 },
+                expires: tokenInstance.Expiration,
+                notBefore: DateTime.Now,
                 signingCredentials: signingCredentials
                 );
 

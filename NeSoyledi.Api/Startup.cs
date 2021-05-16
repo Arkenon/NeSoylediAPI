@@ -31,8 +31,8 @@ namespace NeSoyledi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddCors();
             services.AddAutoMapper(typeof(Startup));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
@@ -47,7 +47,7 @@ namespace NeSoyledi.Api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecurityKey"])),
                     ClockSkew = TimeSpan.Zero
                 };
-            });
+            });       
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IDiscourseRepository, DiscourseRepository>();
@@ -70,11 +70,12 @@ namespace NeSoyledi.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(
-                options => options.WithOrigins("http://localhost:3000").AllowAnyMethod()
-                );
-
+           
             app.UseRouting();
+
+            app.UseCors(
+               options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+           );
 
             app.UseAuthentication();
 

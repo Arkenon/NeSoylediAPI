@@ -8,7 +8,6 @@ namespace NeSoyledi.Data
     {
         public NeSoylediDbContext(DbContextOptions options) : base(options)
         {
-
         }
         public DbSet<Option> Options { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -18,8 +17,6 @@ namespace NeSoyledi.Data
         public DbSet<Profiles> Profiles { get; set; }
         public DbSet<Versus> Versus { get; set; }
         public DbSet<Organization> Organizations { get; set; }
-        public object Specifications { get; internal set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -28,6 +25,8 @@ namespace NeSoyledi.Data
                 .ApplyConfiguration(new DiscourseConf());
             builder
                .ApplyConfiguration(new ProfilesConf());
+            builder
+               .ApplyConfiguration(new UserConf());
         }
 
     }

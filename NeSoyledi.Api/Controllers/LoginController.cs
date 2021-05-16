@@ -24,14 +24,14 @@ namespace NeSoyledi.Api.Controllers
             _configuration = configuration;
         }
 
-        [HttpPut("")]
-        public Token Login([FromForm] UserLoginDTO userLogin)
+        [HttpPost("")]
+        public Token Login(UserLoginDTO userLogin)
         {
             var _findUser = _userService.Where(x => x.UserEmail == userLogin.UserEmail && x.UserPass == userLogin.UserPass).FirstOrDefault();
             if (_findUser != null)
             {
                 TokenHandler tokenHandler = new TokenHandler(_configuration);
-                Token token = tokenHandler.CreateAccessToken();
+                Token token = tokenHandler.CreateAccessToken(_findUser);
                 UserTokenUpdateDTO userTokenUpdateDTO = new UserTokenUpdateDTO()
                 {
                     Id = _findUser.Id,
@@ -53,14 +53,14 @@ namespace NeSoyledi.Api.Controllers
             return null;
         }
 
-        [HttpPut("")]
-        public Token RefreshLogin([FromForm] string refreshToken)
+        [HttpPost("")]
+        public Token RefreshLogin(string refreshToken)
         {
             var _findUser = _userService.Where(x => x.RefreshToken == refreshToken).FirstOrDefault();
             if (_findUser != null && _findUser?.RefreshTokenEndDate < DateTime.Now)
             {
                 TokenHandler tokenHandler = new TokenHandler(_configuration);
-                Token token = tokenHandler.CreateAccessToken();
+                Token token = tokenHandler.CreateAccessToken(_findUser);
                 UserTokenUpdateDTO userTokenUpdateDTO = new UserTokenUpdateDTO()
                 {
                     Id = _findUser.Id,
