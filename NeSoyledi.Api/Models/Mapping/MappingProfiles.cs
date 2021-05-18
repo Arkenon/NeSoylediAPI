@@ -34,6 +34,8 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<User, UserLoginDTO>();
             CreateMap<UserTokenUpdateDTO, User>();
             CreateMap<User, UserTokenUpdateDTO>();
+            CreateMap<SaveUserDTO, User>();
+            CreateMap<User, SaveUserDTO>();
         }
     }
 }

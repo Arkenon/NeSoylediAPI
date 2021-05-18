@@ -1,15 +1,11 @@
 ﻿using NeSoyledi.Business.Abstract;
-using NeSoyledi.Entities;
-using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using NeSoyledi.Data.Helpers;
+using NeSoyledi.Entities;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace NeSoyledi.Business.Concrete
 {
@@ -32,17 +28,17 @@ namespace NeSoyledi.Business.Concrete
         {
             return await _profileRepository.GetById(id);
         }
-        public async Task Create(Profiles entity)
+        public void Create(Profiles entity)
         {
-            await _profileRepository.Create(entity);
+            _profileRepository.Create(entity);
         }
         public async Task Delete(int id)
         {
             await _profileRepository.Delete(id);
         }
-        public async Task Update(int id, Profiles entity)
+        public void Update(int id, Profiles entity)
         {
-            await _profileRepository.Update(id, entity);
+            _profileRepository.Update(id, entity);
         }
         public IQueryable<Profiles> Where(Expression<Func<Profiles, bool>> where)
         {

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NeSoyledi.Business.Abstract;
+﻿using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
 using NeSoyledi.Data.Helpers;
@@ -48,17 +47,17 @@ namespace NeSoyledi.Business.Concrete
             return response;
         }
 
-        public async Task Create(User entity)
+        public void Create(User entity)
         {
-            await _userRepository.Create(entity);
+            _userRepository.Create(entity);
         }
         public async Task Delete(int id)
         {
             await _userRepository.Delete(id);
         }
-        public async Task Update(int id, User entity)
+        public void Update(int id, User entity)
         {
-            await _userRepository.Update(id, entity);
+            _userRepository.Update(id, entity);
         }
         public IQueryable<User> Where(Expression<Func<User, bool>> where)
         {

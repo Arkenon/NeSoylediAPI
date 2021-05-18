@@ -30,23 +30,23 @@ namespace NeSoyledi.Data.Concrete
         {
             return _dbContext.Set<TEntity>().AsNoTracking().Where(where);
         }
-        public async Task Create(TEntity entity)
+        public void Create(TEntity entity)
         {
-            await _dbContext.Set<TEntity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.Set<TEntity>().Add(entity);
+            _dbContext.SaveChanges();
         }
-        public async Task Update(int id, TEntity entity)
+        public void Update(int id, TEntity entity)
         {
             entity.Id = id;
             _dbContext.Set<TEntity>().Update(entity);
 
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
         public async Task Delete(int id)
         {
             var entity = await GetById(id);
             _dbContext.Set<TEntity>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            _dbContext.SaveChanges();
         }
     }
 }

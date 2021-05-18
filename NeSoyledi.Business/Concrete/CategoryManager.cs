@@ -29,13 +29,13 @@ namespace NeSoyledi.Business.Concrete
         {
             return _categoryRepository.Where(where);
         }
-        public async Task Create(Category entity)
+        public void Create(Category entity)
         {
-            await _categoryRepository.Create(entity);
+            _categoryRepository.Create(entity);
         }
-        public async Task Update(int id, Category entity)
+        public void Update(int id, Category entity)
         {
-            await _categoryRepository.Update(id, entity);
+            _categoryRepository.Update(id, entity);
         }
         public async Task Delete(int id)
         {

@@ -28,4 +28,17 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
         public string RefreshToken { get; set; }
         public DateTime? RefreshTokenEndDate { get; set; }
     }
+
+    public class SaveUserDTO
+    {
+        public string UserLoginName { get; set; }
+        public string UserEmail { get; set; }
+        public string UserPass { get; set; }
+    }
+
+    public class SaveUserResponseDTO
+    {
+        public string ErrorMessage { get; set; }
+        public bool Status { get; set; }
+    }
 }

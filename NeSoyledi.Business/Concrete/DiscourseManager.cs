@@ -46,13 +46,13 @@ namespace NeSoyledi.Business.Concrete
         {
             return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).FirstOrDefaultAsync(e => e.Id == id);
         }
-        public async Task Create(Discourse entity)
+        public void Create(Discourse entity)
         {
-            await _discourseRepository.Create(entity);
+            _discourseRepository.Create(entity);
         }
-        public async Task Update(int id, Discourse entity)
+        public void Update(int id, Discourse entity)
         {
-            await _discourseRepository.Update(id, entity);
+            _discourseRepository.Update(id, entity);
         }
         public async Task Delete(int id)
         {

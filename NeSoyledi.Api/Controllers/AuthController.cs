@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NeSoyledi.Api.Helpers;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data.Helpers;
@@ -12,12 +14,12 @@ namespace NeSoyledi.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IMapper _mapper;
         private IUserService _userService;
         private readonly IConfiguration _configuration;
-        public LoginController(IUserService userService, IMapper mapper, IConfiguration configuration)
+        public AuthController(IUserService userService, IMapper mapper, IConfiguration configuration)
         {
             _mapper = mapper;
             _userService = userService;
@@ -80,6 +82,42 @@ namespace NeSoyledi.Api.Controllers
                 }
             }
             return null;
+        }
+
+        [HttpPost("")]
+        public SaveUserResponseDTO Register(SaveUserDTO data)
+        {
+            var getUser = _userService.Where(x => x.UserEmail == data.UserEmail).FirstOrDefault();
+            if (getUser != null)
+            {
+                SaveUserResponseDTO res = new SaveUserResponseDTO()
+                {
+                    ErrorMessage = "Aynı e-posta adresi ile kayıtlı kullanıcı bulunmaktadır.",
+                    Status = false
+                };
+                return res;
+            }
+            else
+            {
+                User _user = new User()
+                {
+                    UserLoginName = data.UserLoginName,
+                    UserNiceName = UrlHelper.GetFriendlyTitle(data.UserLoginName),
+                    UserEmail = data.UserEmail,
+                    UserPass = data.UserPass,
+                    UserRegistered = DateTime.Now,
+                    UserActivationKey = KeyGenerator.GenerateKey(30),
+                    UserStatus = false,
+                };
+                var user = _mapper.Map<User>(_user);
+                _userService.Create(user);
+                SaveUserResponseDTO res = new SaveUserResponseDTO()
+                {
+                    ErrorMessage = "",
+                    Status = true
+                };
+                return res;
+            }
         }
     }
 }
