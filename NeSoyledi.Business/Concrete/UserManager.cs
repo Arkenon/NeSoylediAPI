@@ -1,4 +1,5 @@
-﻿using NeSoyledi.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data;
 using NeSoyledi.Data.Abstract;
 using NeSoyledi.Data.Helpers;
@@ -64,5 +65,10 @@ namespace NeSoyledi.Business.Concrete
             return _userRepository.Where(where);
         }
 
+        public User GetUserDetail(int id)
+        {
+            var user = _context.Set<User>().AsNoTracking().Include(x => x.Discourses).Include(x => x.Comments).FirstOrDefault(e => e.Id == id);
+            return user;
+        }
     }
 }

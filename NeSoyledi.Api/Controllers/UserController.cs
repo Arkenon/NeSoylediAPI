@@ -22,6 +22,18 @@ namespace NeSoyledi.Api.Controllers
             _mapper = mapper;
             _userService = userService;
         }
+
+        [HttpGet("{id}")]
+        public UserDetailDTO GetUserDetail(int id)
+        {
+            var _user = _userService.GetUserDetail(id);
+            var user = _mapper.Map<UserDetailDTO>(_user);
+            user.CommentCount = _user.Comments.Count();
+            user.DiscourseCount = _user.Discourses.Count();
+            return user;
+        }
+
+
         [Authorize]
         [HttpGet("")]
         public UserDTO GetUserByToken()
@@ -34,7 +46,7 @@ namespace NeSoyledi.Api.Controllers
             var _findUser = _userService.Where(x => x.UserEmail == userEmail).FirstOrDefault();
             if (_findUser != null)
             {
-               return  _mapper.Map<UserDTO>(_findUser);
+                return _mapper.Map<UserDTO>(_findUser);
             }
             else
             {

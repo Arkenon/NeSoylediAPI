@@ -16,6 +16,12 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
         public bool UserStatus { get; set; }
     }
 
+    public class UserDetailDTO : UserDTO
+    {
+        public int DiscourseCount { get; set; }
+        public int CommentCount { get; set; }
+    }
+
     public class UserLoginDTO
     {
         public string UserEmail { get; set; }
