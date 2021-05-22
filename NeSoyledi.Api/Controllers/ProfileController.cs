@@ -47,7 +47,7 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<Profiles> GetProfilesFormHome(int pageNumber = 1, int pageSize = 12)
+        public IEnumerable<Profiles> GetProfilesForHome(int pageNumber = 1, int pageSize = 12)
         {
             var _profile = _profileService.GetProfilesForHome(pageNumber, pageSize);
             var profileList = _mapper.Map<IEnumerable<Profiles>>(_profile);

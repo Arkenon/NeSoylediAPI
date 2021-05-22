@@ -56,6 +56,8 @@ namespace NeSoyledi.Api
             services.AddScoped<IProfileService, ProfileManager>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserManager>();
+            services.AddScoped<IVersusRepository, VersusRepository>();
+            services.AddScoped<IVersusService, VersusManager>();
             services.AddDbContext<NeSoylediDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(options =>
             {
