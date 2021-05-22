@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
-using NeSoyledi.Entities;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;

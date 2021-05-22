@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace NeSoyledi.Api.Controllers
 {

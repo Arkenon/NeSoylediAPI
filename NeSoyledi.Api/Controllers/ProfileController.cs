@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Business.Abstract;
 using NeSoyledi.Entities;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NeSoyledi.Api.Controllers
