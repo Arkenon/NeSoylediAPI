@@ -46,10 +46,10 @@ namespace NeSoyledi.Api.Controllers
             return discourseList;
         }
         [HttpGet("{profileId}")]
-        public IEnumerable<DiscourseWithProfileDTO> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
+        public IEnumerable<DiscourseForProfileDTO> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
         {
             var discourse = _discourseService.GetDiscoursesByProfileId(pageNumber, pageSize, profileId, order);
-            var discourseList = _mapper.Map<IEnumerable<DiscourseWithProfileDTO>>(discourse);
+            var discourseList = _mapper.Map<IEnumerable<DiscourseForProfileDTO>>(discourse);
             var metadata = new
             {
                 discourse.TotalCount,

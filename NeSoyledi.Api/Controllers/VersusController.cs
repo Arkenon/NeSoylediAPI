@@ -14,10 +14,12 @@ namespace NeSoyledi.Api.Controllers
     {
         private readonly IMapper _mapper;
         private IVersusService _versusService;
-        public VersusController(IVersusService versusService, IMapper mapper)
+        private IDiscourseService _discourseService;
+        public VersusController(IVersusService versusService, IMapper mapper, IDiscourseService discourseService)
         {
             _mapper = mapper;
             _versusService = versusService;
+            _discourseService = discourseService;
         }
 
         [HttpGet("{id}")]
@@ -29,10 +31,10 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<VersusDTO> Get(int pageNumber, int pageSize)
+        public IEnumerable<VersusForHomeDTO> Get(int pageNumber, int pageSize)
         {
             var versus = _versusService.GetAll(pageNumber, pageSize);
-            var versusList = _mapper.Map<IEnumerable<VersusDTO>>(versus);
+            var versusList = _mapper.Map<IEnumerable<VersusForHomeDTO>>(versus);
             var metadata = new
             {
                 versus.TotalCount,
@@ -47,10 +49,10 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<VersusDTO> GetVersusForHome(int pageNumber = 1, int pageSize = 6)
+        public IEnumerable<VersusForHomeDTO> GetVersusForHome(int pageNumber = 1, int pageSize = 6)
         {
             var versus = _versusService.GetVersusForHome(pageNumber, pageSize);
-            var versusList = _mapper.Map<IEnumerable<VersusDTO>>(versus);
+            var versusList = _mapper.Map<IEnumerable<VersusForHomeDTO>>(versus);
             return versusList;
         }
     }

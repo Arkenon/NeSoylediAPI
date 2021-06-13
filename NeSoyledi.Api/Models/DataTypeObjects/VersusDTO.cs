@@ -20,4 +20,12 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
 
         public CategoryDTO Category { get; set; }
     }
+
+    public class VersusForHomeDTO
+    {
+        public int Id { get; set; }
+        public string VersusTitle { get; set; }
+        public string VersusImage { get; set; }
+        public string PostSlug { get; set; }
+    }
 }

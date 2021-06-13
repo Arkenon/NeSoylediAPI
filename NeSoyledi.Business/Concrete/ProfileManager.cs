@@ -22,7 +22,7 @@ namespace NeSoyledi.Business.Concrete
         }
         public PagedList<Profiles> GetProfilesForHome(int pageNumber, int pageSize)
         {
-            return PagedList<Profiles>.ToPagedList(_profileRepository.GetAll(pageNumber, pageSize).OrderBy(r => Guid.NewGuid()), pageNumber, pageSize);
+            return PagedList<Profiles>.ToPagedList(_profileRepository.GetAll(pageNumber, pageSize).Where(x => x.Discourses.Count() > 0).OrderBy(r => Guid.NewGuid()), pageNumber, pageSize);
         }
         public async Task<Profiles> GetById(int id)
         {

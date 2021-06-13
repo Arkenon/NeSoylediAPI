@@ -41,12 +41,23 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
         public Organization Organization { get; set; }
     }
 
-    public class DiscourseWithProfileDTO
+    public class DiscourseForProfileDTO
     {
         public int Id { get; set; }
         public string DiscourseTitle { get; set; }
         public string DiscourseImage { get; set; }
         public DateTime DiscourseDate { get; set; }
         public string PostSlug { get; set; }
+    }
+
+    public class DiscourseForVersusDTO
+    {
+        public int Id { get; set; }
+        public string DiscourseTitle { get; set; }
+        public string DiscourseImage { get; set; }
+        public DateTime DiscourseDate { get; set; }
+        public string PostSlug { get; set; }
+
+        public ProfileForDiscourseDTO Profile { get; set; }
     }
 }
