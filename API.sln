@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeSoyledi.Api", "NeSoyledi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeSoyledi.Data", "NeSoyledi.Data\NeSoyledi.Data.csproj", "{B32800CB-D6E1-4E3D-97A5-1E1B24A6AB92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeSoyledi.Business", "NeSoyledi.Business\NeSoyledi.Business.csproj", "{89C7FA8F-AA43-4E6F-BE6D-BD8B15122453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeSoyledi.Business", "NeSoyledi.Business\NeSoyledi.Business.csproj", "{89C7FA8F-AA43-4E6F-BE6D-BD8B15122453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeSoyledi.Entities", "NeSoyledi.Entities\NeSoyledi.Entities.csproj", "{E26D06CD-A8D3-499F-B2DE-84A9D174ABE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeSoyledi.Entities", "NeSoyledi.Entities\NeSoyledi.Entities.csproj", "{E26D06CD-A8D3-499F-B2DE-84A9D174ABE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

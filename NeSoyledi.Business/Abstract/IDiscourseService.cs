@@ -7,6 +7,6 @@ namespace NeSoyledi.Business.Abstract
     public interface IDiscourseService: IBusinessService<Discourse>
     {
         IQueryable<Discourse> GetDiscoursesForHome(int pageNumber, int pageSize);
-        PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order);
+        PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order, string starDate="", string endDate="");
     }
 }

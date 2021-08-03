@@ -76,7 +76,7 @@ namespace NeSoyledi.Api
             app.UseRouting();
 
             app.UseCors(
-               options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+               options => options.SetIsOriginAllowed(x => _ = true).AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithExposedHeaders("X-Pagination")
            );
 
             app.UseAuthentication();

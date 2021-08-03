@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NeSoyledi.Api.Models.DataTypeObjects;
 using NeSoyledi.Business.Abstract;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,9 +47,9 @@ namespace NeSoyledi.Api.Controllers
             return discourseList;
         }
         [HttpGet("{profileId}")]
-        public IEnumerable<DiscourseForProfileDTO> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
+        public IEnumerable<DiscourseForProfileDTO> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order, string startDate = "", string endDate = "")
         {
-            var discourse = _discourseService.GetDiscoursesByProfileId(pageNumber, pageSize, profileId, order);
+            var discourse = _discourseService.GetDiscoursesByProfileId(pageNumber, pageSize, profileId, order, startDate, endDate);
             var discourseList = _mapper.Map<IEnumerable<DiscourseForProfileDTO>>(discourse);
             var metadata = new
             {
@@ -60,6 +61,7 @@ namespace NeSoyledi.Api.Controllers
                 discourse.HasPrevious
             };
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+
             return discourseList;
         }
 

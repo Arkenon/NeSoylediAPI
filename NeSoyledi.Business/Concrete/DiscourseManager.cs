@@ -29,12 +29,29 @@ namespace NeSoyledi.Business.Concrete
         {
             return _discourseRepository.GetAll(pageNumber, pageSize).Include(x => x.Profile).Include(x => x.Category).OrderBy(r => Guid.NewGuid()).Take(pageSize);
         }
-        public PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order)
+        public PagedList<Discourse> GetDiscoursesByProfileId(int pageNumber, int pageSize, int profileId, string order, string startDate = "", string endDate = "")
         {
+
             if (order == "asc")
             {
                 return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.ProfileId == profileId)
                     .OrderBy(r => r.DiscourseDate), pageNumber, pageSize);
+            }
+            else if (order == "filtered")
+            {
+                DateTime _starDate = DateTime.Parse(startDate);
+                DateTime _endDate;
+                if (endDate != null)
+                {
+                    _endDate = DateTime.Parse(endDate);
+                }
+                else
+                {
+                    _endDate = DateTime.Today;
+                }
+
+                return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.ProfileId == profileId && x.DiscourseDate >= _starDate && x.DiscourseDate <= _endDate)
+                   .OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
             }
             else
             {
