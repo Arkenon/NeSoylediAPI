@@ -44,6 +44,12 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<Versus, VersusDTO>();
             CreateMap<VersusForHomeDTO, Versus>();
             CreateMap<Versus, VersusForHomeDTO>();
+
+            //Comment
+            CreateMap<CommentDTO, Comment>();
+            CreateMap<Comment, CommentDTO>();
+            CreateMap<CommentByUserDTO, Comment>();
+            CreateMap<Comment, CommentByUserDTO>();
         }
     }
 }

@@ -26,6 +26,8 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
         public int Id { get; set; }
         public string VersusTitle { get; set; }
         public string VersusImage { get; set; }
+        public string VersusContent { get; set; }
         public string PostSlug { get; set; }
+        public DateTime PostDate { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<VersusForHomeDTO> Get(int pageNumber, int pageSize)
+        public IEnumerable<VersusForHomeDTO> Get(int pageNumber = 1, int pageSize = 10)
         {
             var versus = _versusService.GetAll(pageNumber, pageSize);
             var versusList = _mapper.Map<IEnumerable<VersusForHomeDTO>>(versus);

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-
 namespace NeSoyledi.Business.Concrete
 {
     public class CategoryManager : ICategoryService

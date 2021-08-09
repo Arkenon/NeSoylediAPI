@@ -19,14 +19,24 @@ namespace NeSoyledi.Data.Helpers
             PageSize = pageSize;
             CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-
-            AddRange(items);
+            if (TotalCount > 0)
+            {
+                AddRange(items);
+            }
         }
 
         public static PagedList<T> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
         {
             var count = source.Count();
-            var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            List<T> items;
+            if (count > 0)
+            {
+                items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                items = null;
+            }
 
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }

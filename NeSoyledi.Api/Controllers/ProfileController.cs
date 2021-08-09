@@ -29,7 +29,7 @@ namespace NeSoyledi.Api.Controllers
         }
 
         [HttpGet("")]
-        public IEnumerable<Profiles> Get(int pageNumber, int pageSize)
+        public IEnumerable<Profiles> Get(int pageNumber=1, int pageSize=10)
         {
             var _profile = _profileService.GetAll(pageNumber, pageSize);
             var profileList = _mapper.Map<IEnumerable<Profiles>>(_profile);

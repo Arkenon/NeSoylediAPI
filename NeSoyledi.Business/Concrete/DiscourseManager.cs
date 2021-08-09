@@ -22,8 +22,7 @@ namespace NeSoyledi.Business.Concrete
         }
         public PagedList<Discourse> GetAll(int pageNumber, int pageSize)
         {
-            return PagedList<Discourse>.ToPagedList(_discourseRepository.GetAll(pageNumber, pageSize)
-                .Include(x => x.Profile).Include(x => x.Category), pageNumber, pageSize);
+            return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.ProfileId != null).Include(x => x.Profile).Include(x => x.Category).OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
         }
         public IQueryable<Discourse> GetDiscoursesForHome(int pageNumber, int pageSize)
         {
@@ -59,6 +58,19 @@ namespace NeSoyledi.Business.Concrete
                    .OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
             }
         }
+
+        public PagedList<Discourse> GetDiscoursesByUserId(int pageNumber, int pageSize, int userId)
+        {
+            return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.UserId == userId)
+                   .OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
+        }
+
+        public PagedList<Discourse> GetDiscoursesByCategoryId(int pageNumber, int pageSize, int categoryId)
+        {
+            return PagedList<Discourse>.ToPagedList(_discourseRepository.Where(x => x.CategoryId == categoryId).Include(x => x.Profile)
+                   .OrderByDescending(r => r.DiscourseDate), pageNumber, pageSize);
+        }
+
         public async Task<Discourse> GetById(int id)
         {
             return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).FirstOrDefaultAsync(e => e.Id == id);

@@ -29,7 +29,8 @@ namespace NeSoyledi.Data
                .ApplyConfiguration(new UserConf());
             builder
                .ApplyConfiguration(new VersusConf());
+            builder
+               .ApplyConfiguration(new CommentConf());
         }
-
     }
 }
