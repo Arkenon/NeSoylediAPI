@@ -11,8 +11,15 @@ namespace NeSoyledi.Entities
         public int Id { get; set; }
         public int CommentPostId { get; set; }
 
+        [MaxLength(1000)]
+        public string CommentPostSlug { get; set; }
+
+        [MaxLength(1000)]
+        public string CommentPostTitle { get; set; }
+
         [MaxLength(255)]
         public string CommentPostType { get; set; }
+
         public string CommentContent { get; set; }
         public int? UserId { get; set; }
 
