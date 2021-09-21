@@ -48,9 +48,9 @@ namespace NeSoyledi.Business.Concrete
             return response;
         }
 
-        public void Create(User entity)
+        public int Create(User entity)
         {
-            _userRepository.Create(entity);
+            return _userRepository.Create(entity);
         }
         public async Task Delete(int id)
         {

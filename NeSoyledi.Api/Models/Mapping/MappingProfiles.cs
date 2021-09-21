@@ -50,6 +50,10 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<Comment, CommentDTO>();
             CreateMap<CommentByUserDTO, Comment>();
             CreateMap<Comment, CommentByUserDTO>();
+            CreateMap<Comment, SaveCommentDTO>();
+            CreateMap<SaveCommentDTO, Comment>();
+            CreateMap<Comment, SaveCommentResponseDTO>();
+            CreateMap<SaveCommentResponseDTO, Comment>();
         }
     }
 }

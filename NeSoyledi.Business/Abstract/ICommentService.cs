@@ -6,5 +6,6 @@ namespace NeSoyledi.Business.Abstract
     public interface ICommentService : IBusinessService<Comment>
     {
         PagedList<Comment> GetCommentsByUserId(int pageNumber, int pageSize, int userId);
+        PagedList<Comment> GetCommentsByPostId(int pageNumber, int pageSize, int postId);
     }
 }

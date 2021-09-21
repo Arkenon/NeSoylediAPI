@@ -11,7 +11,7 @@ namespace NeSoyledi.Business.Abstract
         PagedList<TEntity> GetAll(int pageNumber, int pageSize);
         Task<TEntity> GetById(int id);
         IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> where);
-        void Create(TEntity entity);
+        int Create(TEntity entity);
         void Update(int id, TEntity entity);
         Task Delete(int id);
     }

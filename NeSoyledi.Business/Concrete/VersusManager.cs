@@ -36,9 +36,9 @@ namespace NeSoyledi.Business.Concrete
         {
             return _versusRepository.GetAll(pageNumber, pageSize).Include(x => x.Category).OrderBy(r => Guid.NewGuid()).Take(pageSize);
         }
-        public void Create(Versus entity)
+        public int Create(Versus entity)
         {
-            _versusRepository.Create(entity);
+            return _versusRepository.Create(entity);
         }
 
         public async Task Delete(int id)

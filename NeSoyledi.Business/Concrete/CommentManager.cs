@@ -1,4 +1,5 @@
-﻿using NeSoyledi.Business.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data.Abstract;
 using NeSoyledi.Data.Helpers;
 using NeSoyledi.Entities;
@@ -28,9 +29,9 @@ namespace NeSoyledi.Business.Concrete
         {
             return _CommentRepository.Where(where);
         }
-        public void Create(Comment entity)
+        public int Create(Comment entity)
         {
-            _CommentRepository.Create(entity);
+           return _CommentRepository.Create(entity);
         }
         public void Update(int id, Comment entity)
         {
@@ -47,5 +48,10 @@ namespace NeSoyledi.Business.Concrete
                    .OrderByDescending(r => r.CommentDate), pageNumber, pageSize);
         }
 
+        public PagedList<Comment> GetCommentsByPostId(int pageNumber, int pageSize, int postId)
+        {
+            return PagedList<Comment>.ToPagedList(_CommentRepository.Where(x => x.CommentPostId == postId)
+                   .OrderByDescending(r => r.CommentDate), pageNumber, pageSize);
+        }
     }
 }

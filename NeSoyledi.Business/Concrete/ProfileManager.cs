@@ -28,9 +28,9 @@ namespace NeSoyledi.Business.Concrete
         {
             return await _profileRepository.GetById(id);
         }
-        public void Create(Profiles entity)
+        public int Create(Profiles entity)
         {
-            _profileRepository.Create(entity);
+            return _profileRepository.Create(entity);
         }
         public async Task Delete(int id)
         {

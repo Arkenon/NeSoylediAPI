@@ -30,10 +30,11 @@ namespace NeSoyledi.Data.Concrete
         {
             return _dbContext.Set<TEntity>().AsNoTracking().Where(where);
         }
-        public void Create(TEntity entity)
+        public int Create(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
+            return entity.Id;
         }
         public void Update(int id, TEntity entity)
         {

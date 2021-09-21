@@ -28,9 +28,9 @@ namespace NeSoyledi.Business.Concrete
         {
             return _categoryRepository.Where(where);
         }
-        public void Create(Category entity)
+        public int Create(Category entity)
         {
-            _categoryRepository.Create(entity);
+            return _categoryRepository.Create(entity);
         }
         public void Update(int id, Category entity)
         {

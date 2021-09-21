@@ -75,9 +75,9 @@ namespace NeSoyledi.Business.Concrete
         {
             return await _context.Set<Discourse>().AsNoTracking().Include(x => x.Profile).Include(x => x.Category).FirstOrDefaultAsync(e => e.Id == id);
         }
-        public void Create(Discourse entity)
+        public int Create(Discourse entity)
         {
-            _discourseRepository.Create(entity);
+            return _discourseRepository.Create(entity);
         }
         public void Update(int id, Discourse entity)
         {
