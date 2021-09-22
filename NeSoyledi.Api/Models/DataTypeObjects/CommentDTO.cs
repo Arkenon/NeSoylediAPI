@@ -19,6 +19,7 @@ namespace NeSoyledi.Api.Models.DataTypeObjects
     public class CommentByUserDTO
     {
         public int Id { get; set; }
+        public string UserName { get; set; }
         public int CommentPostId { get; set; }
         public string CommentPostType { get; set; }
         public string CommentPostSlug { get; set; }

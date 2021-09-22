@@ -17,6 +17,8 @@ namespace NeSoyledi.Data
         public DbSet<Profiles> Profiles { get; set; }
         public DbSet<Versus> Versus { get; set; }
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<Reaction> Reactions { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -31,6 +33,10 @@ namespace NeSoyledi.Data
                .ApplyConfiguration(new VersusConf());
             builder
                .ApplyConfiguration(new CommentConf());
+            builder
+               .ApplyConfiguration(new NewsConf());
+            builder
+              .ApplyConfiguration(new ReactionConf());
         }
     }
 }

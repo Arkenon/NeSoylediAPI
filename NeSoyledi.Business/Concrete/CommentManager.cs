@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NeSoyledi.Business.Abstract;
+﻿using NeSoyledi.Business.Abstract;
 using NeSoyledi.Data.Abstract;
 using NeSoyledi.Data.Helpers;
 using NeSoyledi.Entities;
