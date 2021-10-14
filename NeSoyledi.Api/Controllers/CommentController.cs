@@ -56,16 +56,17 @@ namespace NeSoyledi.Api.Controllers
         [HttpGet("{userId}")]
         public IEnumerable<CommentByUserDTO> GetCommentsByUserId(int pageNumber, int pageSize, int userId)
         {
-            var comment = _commentService.GetCommentsByUserId(pageNumber, pageSize, userId);
-            var commentList = _mapper.Map<IEnumerable<CommentByUserDTO>>(comment);
+            var comments = _commentService.GetCommentsByUserId(pageNumber, pageSize, userId);
+            var commentList = _mapper.Map<IEnumerable<CommentByUserDTO>>(comments);
+
             var metadata = new
             {
-                comment.TotalCount,
-                comment.PageSize,
-                comment.CurrentPage,
-                comment.TotalPages,
-                comment.HasNext,
-                comment.HasPrevious
+                comments.TotalCount,
+                comments.PageSize,
+                comments.CurrentPage,
+                comments.TotalPages,
+                comments.HasNext,
+                comments.HasPrevious
             };
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
@@ -97,20 +98,18 @@ namespace NeSoyledi.Api.Controllers
             if (form.CommentPostType == "soylem")
             {
                 _discourse = await GetDiscourseById(form.CommentPostId);
-                var discourse = _mapper.Map<Discourse>(_discourse);
-                _comment.CommentPostSlug = discourse.PostSlug;
-                _comment.CommentPostTitle = discourse.DiscourseTitle;
+                _comment.CommentPostSlug = _discourse.PostSlug;
+                _comment.CommentPostTitle = _discourse.DiscourseTitle;
             }
             if (form.CommentPostType == "versus")
             {
                 _versus = await GetVersusById(form.CommentPostId);
-                var versus = _mapper.Map<Versus>(_versus);
-                _comment.CommentPostSlug = versus.PostSlug;
-                _comment.CommentPostTitle = versus.VersusTitle;
+                _comment.CommentPostSlug = _versus.PostSlug;
+                _comment.CommentPostTitle = _versus.VersusTitle;
             }
 
-            var comment = _mapper.Map<Comment>(_comment);
-            var id = _commentService.Create(comment);
+          
+            var id = _commentService.Create(_comment);
 
             CommentDTO new_comment = await GetById(id);
 
