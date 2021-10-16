@@ -19,6 +19,9 @@ namespace NeSoyledi.Entities
         [MaxLength(255)]
         public string UserIP { get; set; }
 
+        //1: Like, 2: Dislike, 3: Favorite
+        public int ReactionType { get; set; }
+
         [Column(TypeName = "datetime")]
         public DateTime ReactionDate { get; set; }
     }
