@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NeSoyledi.Business.Concrete
 {
-    class ReactionManager : IReactionService
+    public class ReactionManager : IReactionService
     {
         private IReactionRepository _reactionRepository;
         public ReactionManager(IReactionRepository reactionRepository)

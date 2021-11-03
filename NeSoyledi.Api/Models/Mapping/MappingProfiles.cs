@@ -54,6 +54,12 @@ namespace NeSoyledi.Api.Models.Mapping
             CreateMap<SaveCommentDTO, Comment>();
             CreateMap<Comment, SaveCommentResponseDTO>();
             CreateMap<SaveCommentResponseDTO, Comment>();
+
+            //Reactions
+            CreateMap<ReactionDTO, Reaction>();
+            CreateMap<Reaction, ReactionDTO>();
+            CreateMap<SaveReactionResponseDTO, Reaction>();
+            CreateMap<Reaction, SaveReactionResponseDTO>();
         }
     }
 }
