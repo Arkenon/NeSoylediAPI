@@ -65,7 +65,7 @@ namespace NeSoyledi.Api
             services.AddDbContext<NeSoylediDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Ne Söyledi?", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Ne SÃ¶yledi?", Version = "v1" });
             });
         }
 
@@ -97,7 +97,7 @@ namespace NeSoyledi.Api
             app.UseSwagger(); app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json?key=9a92661b70c983be53143d7600bc2284", "Ne Söyledi? V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json?key=get_key_here", "Ne SÃ¶yledi? V1");
             });
         }
     }
